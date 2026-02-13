@@ -4,17 +4,13 @@ An [age](https://age-encryption.org) plugin that derives encryption keys from
 [BIP39](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki) seed
 phrases. This lets you use a memorable 24-word mnemonic as your age identity.
 
-[![demo](https://asciinema.org/a/ch1qW7BykEYhYePc.svg)](https://asciinema.org/a/ch1qW7BykEYhYePc)
-
-## Installation
-
-```
-go install github.com/pinpox/age-plugin-bip39@latest
-```
-
-The binary must be in your `$PATH` for age to discover it.
+![demo](https://github.com/user-attachments/assets/8b628475-554a-4e6f-bac5-2ea398522533)
 
 ## Usage
+
+The environment variable `AGE_PLUGIN_BIP39_CACHE` configures cache TTL for
+derived keys (default: `10m`, `0` to disable). Uses the Linux kernel keyring to
+store them in memory.
 
 ### Generate an identity
 
@@ -47,11 +43,6 @@ age -d -i identity.txt secret.age > secret.txt
 
 age will invoke the plugin automatically and prompt for your seed phrase.
 
-## Environment
-
-| Variable | Description |
-|---|---|
-| `AGE_PLUGIN_BIP39_CACHE` | Cache TTL for derived keys (default: `10m`, `0` to disable). Uses the Linux kernel keyring. |
 
 ## How it works
 
@@ -60,7 +51,3 @@ entropy via BIP39, derives an X25519 keypair using the same method as
 [melt](https://github.com/charmbracelet/melt) (SHA-512 of the entropy, clamped
 to a Curve25519 scalar), and uses the standard age X25519 recipient mechanism
 for encryption and decryption.
-
-## License
-
-MIT
